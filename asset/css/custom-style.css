@@ -1,0 +1,18 @@
+body{
+    min-height: 800px;
+}
+.main-content{
+    border: 2px solid #337AB7;
+}
+
+.spacer{
+    height: 30px;
+}
+
+.btn-space{
+    margin-left: 15px;
+}
+
+.fluid-margin{
+    margin: 0px 10px;
+}
