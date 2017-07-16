@@ -51,6 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
+$route['update-company-info'] = 'company/update';
+$route['edit/(:any)'] = 'company/view_edit_form/$1';
+$route['view-detail/(:any)'] = 'company/view_detail/$1';
 $route['save-company-info'] = 'company/add';
 $route['add-new'] = 'company/view_add_form';
 

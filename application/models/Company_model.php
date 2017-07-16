@@ -7,11 +7,16 @@ class Company_model extends CI_Model {
     private $tbl_name = 'tbl_company_info';
     private $id = NULL;
     private $result = '';
-    private $data;
+    private $data = '';
 
     
     public function set_data($data){
         $this->data = $data;
+        return $this;
+    }
+    
+    public function set_id($id){
+        $this->id = $id;
         return $this;
     }
     
@@ -24,24 +29,22 @@ class Company_model extends CI_Model {
         $this->db->select('*')->from($this->tbl_name);
         if($this->id !== NULL){
             $this->result = $this->db->where('id', $this->id)
+                                    ->where('status', 1)
                                     ->get()->row();
         }else{
-            $this->result = $this->db->get()->result();
+            $this->result = $this->db->where('status', 1)->get()->result();
         }
         
         return $this;
     }
     
     public function update(){
-        $field_name = array('');
-        $data = $this->input->post($field_name, TRUE);
-        
+       $this->db->where('id', $this->id);
+       $this->db->update($this->tbl_name, $this->data);
     }
     
     public function get_result(){
         return $this->result;
     }
-    
-    
 
 }

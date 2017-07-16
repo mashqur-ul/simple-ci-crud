@@ -3,7 +3,7 @@
 <div class="container-fluid fluid-margin">
     <div class="row">
         <div class="col-lg-12 bg-primary">
-            <h4>View Tabular Data</h4>
+            <h4>Company List</h4>
         </div>
         <div class="col-lg-12 main-content">
             <div class="col-lg-12">
@@ -34,7 +34,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -64,19 +64,19 @@
                                 <td><?= $company->email; ?></td>
                                 <td><?= $company->web_url; ?></td>
                                 <td>
-                                    <button class="btn btn-success">
+                                    <a href="<?= base_url('view-detail/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-success">
                                         <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
-                                    </button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary">
+                                    <a href="<?= base_url('edit/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-primary">
                                         <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger">
+                                    <a href="<?= base_url('delete/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-danger">
                                         <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             <?php } ?>
