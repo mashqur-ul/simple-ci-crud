@@ -95,5 +95,11 @@ class Company extends CI_Controller {
             redirect();
         }
     }
+    
+    public function delete($enc_id){
+        $id = $this->encryption->decrypt($enc_id);
+        $this->company_model->set_id($id)->delete();
+        redirect();
+    }
 
 }

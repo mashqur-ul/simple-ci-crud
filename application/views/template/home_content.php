@@ -74,7 +74,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="<?= base_url('delete/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-danger">
+                                    <a href="<?= base_url('delete/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete ?')">
                                         <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </a>
                                 </td>

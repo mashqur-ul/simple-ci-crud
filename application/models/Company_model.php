@@ -39,12 +39,15 @@ class Company_model extends CI_Model {
     }
     
     public function update(){
-       $this->db->where('id', $this->id);
-       $this->db->update($this->tbl_name, $this->data);
+       $this->db->where('id', $this->id)->update($this->tbl_name, $this->data);
     }
     
     public function get_result(){
         return $this->result;
+    }
+    
+    public function delete(){
+        $this->db->set('status', 0)->where('id', $this->id)->update($this->tbl_name);
     }
 
 }
