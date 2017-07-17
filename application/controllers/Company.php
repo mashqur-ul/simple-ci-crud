@@ -11,8 +11,10 @@ class Company extends CI_Controller {
         $this->load->library(array('form_validation', 'encryption'));
     }
 
-    public function index() {
-        $data['company_list'] = $this->company_model->get_company()->get_result();
+    public function index($data = NULL) {
+        if (!isset($data['company_list'])) {
+            $data['company_list'] = $this->company_model->get_company()->get_result();
+        }
         $this->load->view('template/header');
         $this->load->view('template/home_content', $data);
         $this->load->view('template/footer');
@@ -87,19 +89,33 @@ class Company extends CI_Controller {
                 $this->view_edit_form($this->input->post('update_id'));
                 return;
             }
-            
-            $data = $this->input->post(NULL, TRUE);           
+
+            $data = $this->input->post(NULL, TRUE);
             $id = $this->encryption->decrypt($data['update_id']);
             unset($data['update_id']);
             $this->company_model->set_id($id)->set_data($data)->update();
             redirect();
         }
     }
-    
-    public function delete($enc_id){
+
+    public function delete($enc_id) {
         $id = $this->encryption->decrypt($enc_id);
         $this->company_model->set_id($id)->delete();
         redirect();
+    }
+
+    public function search() {
+        $param = $this->input->post(NULL, TRUE);
+
+        if (!empty($param['search_name']) || !empty($param['search_country'])) {
+            $data['company_list'] = $this->company_model->set_search_param($param)->search()->get_result();
+            $data['search_option'] = $param;            
+            $this->index($data);
+        } else {
+            $data['search_error'] = 'Country Name or Company Name is Required for Search !';
+            $this->session->set_flashdata('search_error', 'Country Name or Company Name is Required for Search !');
+            redirect();
+        }
     }
 
 }

@@ -7,24 +7,28 @@
         </div>
         <div class="col-lg-12 main-content">
             <div class="col-lg-12">
-                <form class="form-inline">
+                <form class="form-inline" method="post" action="<?= base_url("search-company"); ?>">
                     <fieldset class="fieldset">
                         <legend>Search</legend>
-                        <div class="form-group col-sm-4 col-sm-offset-1">
-                            <label for="exampleInputName2">Name of Country</label>
-                            <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                        <div class="form-group col-sm-5 col-sm-offset-1">
+                            <label for="countryName">Country</label>
+                            <select id="countryName" name="search_country" class="form-control bfh-countries" data-country="<?= isset($search_option['search_country']) ? $search_option['search_country'] :''; ?>"></select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="exampleInputEmail2">Name</label>
-                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                            <label for="CompanyName">Name</label>
+                            <input type="text" name="search_name" class="form-control" id="CompanyName" value="<?= isset($search_option['search_name']) ? $search_option['search_name'] :''; ?>">
                         </div>
                         <div class="col-sm-2">
                             <button type="submit" class="btn btn-default btn-space">Search</button>
                         </div>                        
                     </fieldset>
-                </form>
+                </form>                
             </div>
-            <div class="col-lg-12 col-lg-offset-10">
+            <div class="col-lg-12 spacer"></div>
+            <div class="col-lg-12 text-center text-danger">
+                <?= $this->session->has_userdata('search_error') ? $this->session->flashdata('search_error') : ''; ?>
+            </div>
+            <div class="col-lg-2 col-lg-offset-10 text-right">
                 <a href="<?php echo base_url('add-new') ?>" class="btn btn-default btn-primary">Add New</a>
             </div>
             <div class="col-lg-12">
@@ -52,33 +56,33 @@
                         <tbody>
                             <?php
                             $counter = 0;
-                            foreach($company_list as $company) {
-                            $counter++;
-                            ?>
-                            <tr>
-                                <th scope="row"><?= $counter; ?></th>
-                                <td><?= $company->country; ?></td>
-                                <td><?= $company->name; ?></td>
-                                <td><?= $company->phone; ?></td>
-                                <td><?= $company->fax; ?></td>
-                                <td><?= $company->email; ?></td>
-                                <td><?= $company->web_url; ?></td>
-                                <td>
-                                    <a href="<?= base_url('view-detail/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-success">
-                                        <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="<?= base_url('edit/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="<?= base_url('delete/'.$this->encryption->encrypt($company->id)); ?>" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete ?')">
-                                        <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </a>
-                                </td>
-                            </tr>
+                            foreach ($company_list as $company) {
+                                $counter++;
+                                ?>
+                                <tr>
+                                    <th scope="row"><?= $counter; ?></th>
+                                    <td><span class="bfh-countries" data-country="<?= $company->country; ?>"></span></td>
+                                    <td><?= $company->name; ?></td>
+                                    <td><?= $company->phone; ?></td>
+                                    <td><?= $company->fax; ?></td>
+                                    <td><?= $company->email; ?></td>
+                                    <td><?= $company->web_url; ?></td>
+                                    <td>
+                                        <a href="<?= base_url('view-detail/' . $this->encryption->encrypt($company->id)); ?>" class="btn btn-success">
+                                            <span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="<?= base_url('edit/' . $this->encryption->encrypt($company->id)); ?>" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="<?= base_url('delete/' . $this->encryption->encrypt($company->id)); ?>" class="btn btn-danger" onclick="return confirm('Are You Sure to Delete ?')">
+                                            <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
