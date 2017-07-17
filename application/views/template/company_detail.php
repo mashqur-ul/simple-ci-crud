@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1 bg-primary">
-            <h4>Comapny Detail</h4>
+            <h4>Company Detail</h4>
         </div>
         <div class="col-lg-10 col-lg-offset-1 main-content">
             <div class="spacer"></div>

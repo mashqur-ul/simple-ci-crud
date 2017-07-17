@@ -2,6 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @desc This controller class is responsible for form data validation and making
+ *       call to model functionality
+ * @author Md Mashqur Ul Alam <alam_rashu@yahoo.com>
+ *  */
 class Company extends CI_Controller {
 
     public function __construct() {
@@ -11,6 +16,10 @@ class Company extends CI_Controller {
         $this->load->library(array('form_validation', 'encryption'));
     }
 
+    /**
+     * @desc displays default home page 
+     * @param string $data - [optional]
+     */
     public function index($data = NULL) {
         if (!isset($data['company_list'])) {
             $data['company_list'] = $this->company_model->get_company()->get_result();
@@ -20,12 +29,19 @@ class Company extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    /**
+     * @desc Displays for adding new company
+     */
     public function view_add_form() {
         $this->load->view('template/header');
         $this->load->view('template/company_add_form');
         $this->load->view('template/footer');
     }
 
+    /**
+     * @desc Uploads the company logo image
+     * @return BOOL
+     */
     private function upload_image() {
         $config['upload_path'] = './asset/uploads/';
         $config['allowed_types'] = 'gif|jpg|png';
@@ -43,6 +59,9 @@ class Company extends CI_Controller {
         }
     }
 
+    /**
+     * @desc Sets the validation rules for add company form
+     */
     private function set_validation_rules() {
         $this->form_validation->set_rules('country', 'Country Name', 'required');
         $this->form_validation->set_rules('name', 'Company Name', 'required');
@@ -50,6 +69,9 @@ class Company extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email Address', 'valid_email');
     }
 
+    /**
+     * @desc checks validation and insert into database
+     */
     public function add() {
         $this->set_validation_rules();
         if ($this->form_validation->run() == FALSE) {
@@ -64,6 +86,10 @@ class Company extends CI_Controller {
         }
     }
 
+    /**
+     * @desc Displays the detail company information
+     * @param string $enc_id - encrypted id [database primary key]
+     */
     public function view_detail($enc_id) {
         $id = $this->encryption->decrypt($enc_id);
         $data['company'] = $this->company_model->set_id($id)->get_company()->get_result();
@@ -71,7 +97,11 @@ class Company extends CI_Controller {
         $this->load->view('template/company_detail', $data);
         $this->load->view('template/footer');
     }
-
+    
+    /**
+     * @desc displays company information edit form
+     * @param string $enc_id - encrypted id [database primary key]
+     */
     public function view_edit_form($enc_id) {
         $id = $this->encryption->decrypt($enc_id);
         $data['company'] = $this->company_model->set_id($id)->get_company()->get_result();
@@ -80,6 +110,9 @@ class Company extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    /**
+     * @desc check validation and update value to database after editing
+     *  */
     public function update() {
         $this->set_validation_rules();
         if ($this->form_validation->run() == FALSE) {
@@ -98,18 +131,24 @@ class Company extends CI_Controller {
         }
     }
 
+    /**
+     * @desc make the company information status to delete
+     *  */
     public function delete($enc_id) {
         $id = $this->encryption->decrypt($enc_id);
         $this->company_model->set_id($id)->delete();
         redirect();
     }
 
+    /**
+     * @desc Search and display company information based on search parameter
+     *  */
     public function search() {
         $param = $this->input->post(NULL, TRUE);
 
         if (!empty($param['search_name']) || !empty($param['search_country'])) {
             $data['company_list'] = $this->company_model->set_search_param($param)->search()->get_result();
-            $data['search_option'] = $param;            
+            $data['search_option'] = $param;
             $this->index($data);
         } else {
             $data['search_error'] = 'Country Name or Company Name is Required for Search !';
