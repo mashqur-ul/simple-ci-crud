@@ -14,7 +14,7 @@ The following instruction will guide you through the installation procedure at y
 
 ### Installing
 
-* Step-1: Download the project from github repository and extract it at the root of your local server root drectory. Incase of XAMP it will be your htdocs folder.
+* Step-1: Download the project from github repository and extract it at the root of your local server root drectory. Incase of XAMP it will be your htdocs folder. (You can use https://github.com/mashqur-ul/simple-ci-crud.git also)
 * Step-2: Import database using the db_simple_ci_crud.sql file from the downloaded project root.
 * Configure databse connection in the file application/config/database.php. If you are using XAMPP your configuration should look like the following
 
