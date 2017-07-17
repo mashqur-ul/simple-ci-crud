@@ -42,7 +42,7 @@ $db['default'] = array(
 );
 ```
 You should change your hostname, username, password and database according to your configuration.
-*Step-3: change the base_url configuration according to your project root path in the file application/config/config.php
+* Step-3: change the base_url configuration according to your project root path in the file application/config/config.php
 ```
 $config['base_url'] = 'http://localhost/simple-ci-crud/';
 ```
