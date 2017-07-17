@@ -43,6 +43,9 @@ class Company extends CI_Controller {
      * @return BOOL
      */
     private function upload_image() {
+        if(!is_dir('./asset/uploads')){
+            mkdir('./asset/uploads');
+        }
         $config['upload_path'] = './asset/uploads/';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['encrypt_name'] = TRUE;
